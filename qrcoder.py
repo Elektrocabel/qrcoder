@@ -2,7 +2,7 @@ from multiprocessing import Pool, Manager
 import pyqrcode
 import fileinput
 from time import sleep
-from uploader import upload
+from uploader import Uploader
 import imgkit
 import os
 
@@ -25,7 +25,9 @@ def send(q, count):
     for _ in range(count):
         sleep(1)
         filename = q.get()
-        upload(filename)
+        uploader = Uploader('55339406')
+        [photo_id, owner_id] = uploader.upload(filename)
+        uploader.send(photo_id, owner_id)
 
 
 if __name__ == '__main__':
